@@ -7,7 +7,7 @@ package pl.polsl.PawelZachara.lab.projekt.View;
 
 /**
  *
- * @author Admin
+ * This enum contains type of board field.
  */
 public enum FieldType
 {

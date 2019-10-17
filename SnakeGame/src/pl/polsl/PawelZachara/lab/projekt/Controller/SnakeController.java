@@ -7,7 +7,7 @@ package pl.polsl.PawelZachara.lab.projekt.Controller;
 
 /**
  *
- * class that implements snake movement , and growth logic
+ * Class that implements snake movement , and growth logic (adding joints to snake body when he collect points)
  */
 public class SnakeController 
 {
