@@ -49,22 +49,21 @@ public class MapField
     /**
      * @return the fieldType
      */
-    public FieldType getFieldTexture() {
+    public FieldType getFieldType() {
         return fieldType;
     }
 
     /**
      * @param fieldTexture the fieldType to set
      */
-    public void setFieldTexture(FieldType fieldTexture) {
+    public void setFieldType(FieldType fieldTexture) {
         this.fieldType = fieldTexture;
     }
     
-    public void Init(Point coords,FieldState fieldState,FieldType fieldType)
+    MapField(Point coords,FieldState fieldState,FieldType fieldType)
     {
         this.coordinates = coords;
         this.fieldState = fieldState;
         this.fieldType = fieldType;
     }
-        
 }

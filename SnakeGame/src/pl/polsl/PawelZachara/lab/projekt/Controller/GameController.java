@@ -6,7 +6,6 @@
 package pl.polsl.PawelZachara.lab.projekt.Controller;
 
 import java.awt.EventQueue;
-import java.awt.Window;
 import pl.polsl.PawelZachara.lab.projekt.View.*;
 import pl.polsl.PawelZachara.lab.projekt.Model.*;
 
@@ -28,18 +27,14 @@ poprawne przygotowanie całości raportu w postaci zarchiwizowanego katalogu pro
 public class GameController 
 {
 
-    private static String playerName;
-    
-    
-    
+    private  String playerName;
+    private  GameWindow gameWindow;
+    private  Map gameMap;
+    private  SnakeController snakeController;
     /**
      * Method that initialize game controller variables and state
+     * @param name
     */
-    public static void init(String name)
-    {
-        playerName = name;
-        System.out.print(playerName);
-    }
     
     /**
      * Method that reset game state
@@ -52,11 +47,45 @@ public class GameController
     /**
      * Method that update game state
     */
-    public static void update()
+    public void update(int x,int y)
     {
-    
+        gameWindow.paintComponent(gameWindow,x, y);
     }
     
+    
+    public GameController()
+    {
+        gameWindow = new GameWindow();
+        gameMap = new Map();
+        snakeController = new SnakeController();
+        snakeController.init();
+        gameMap.init(600, snakeController.getSnake().getSNAKE_JOINT_SIZE());
+        
+        
+    }
+    
+    public static class Main
+    {
+        
+         public static void main(String args[]) {
+            GameController gameController = new GameController();
+            
+            while(true)
+            {
+                for (int i = 0; i < 10; i++) {
+                  gameController.update(i*10+100,i*5+100);               
+                }
+            }
+            
+//            EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {     
+//                for (int i = 0; i < 10; i++) {
+//                  gameController.update(i*10+100,i*5+100);               
+//                }
+//            }
+//        });
+        }
+    }
+   
 }
-
-//CHANGE WINDOW.JAVA NA OSOBNY PLIK ZROBIC WŁASNY I PRZEKOPIOWAĆ ZAWARTOŚĆ 
