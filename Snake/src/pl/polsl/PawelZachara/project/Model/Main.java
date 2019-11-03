@@ -59,6 +59,7 @@ public class Main extends JFrame {
     
     /**
      * main program method where main window is initialised
+     * @param args array of arguments passed from running app in terminal
      */
     public static void main(String[] args) {
         

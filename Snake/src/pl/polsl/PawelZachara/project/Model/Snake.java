@@ -52,9 +52,8 @@ public class Snake extends JPanel  {
     * current snake direction
     */
     private Direction snakeCurrentDirection = Direction.RIGHT;
-    
     /*
-    * if game is on this is true else this is false;
+    * variable that tells if the game is on or off;
     */
     private boolean inGame = true;
     /**
@@ -99,34 +98,32 @@ public class Snake extends JPanel  {
         return this.snakeCurrentDirection;
     }
     
-      /**
-     * @param direction direction in which snake will now go
-     */
+    /**
+    * @param direction direction in which snake will now go
+    */
     public void setSnakeDirection(Direction direction)
     {
         this.snakeCurrentDirection = direction;
     }
     
-    
-    
     /**
-     * @param index the index of element to get
-     * @return element of list at given index
-     */
+    * @param index the index of element to get
+    * @return element of list at given index
+    */
     public Integer getAllSnakeJointsXPosElem(int index) {
         return allSnakeJointsXPos.get(index);
     }
 
-        /**
-     * @return list of allSnakeJoints at X positions
-     */
+    /**
+    * @return list of allSnakeJoints at X positions
+    */
     public List<Integer> getAllSnakeJointsXPos() {
         return allSnakeJointsXPos;
     }
     /**
-     * @param index the index in list where the value will be set
-     * @param value the value which will be set on given index
-     */
+    * @param index the index in list where the value will be set
+    * @param value the value which will be set on given index
+    */
     public void setAllSnakeJointsXPosElem(int index , int value)
     {
         this.allSnakeJointsXPos.set(index,value);
@@ -204,7 +201,7 @@ public class Snake extends JPanel  {
             item = 0;
         }
         
-          for(Integer item : allSnakeJointsYPos)
+        for(Integer item : allSnakeJointsYPos)
         {
             item = 0;
         }
@@ -280,7 +277,7 @@ public class Snake extends JPanel  {
      * method checks collision with walls
      */
     public void checkCollision() {
-
+        
         for (int z = getSnakeJoints(); z > 0; z--) {
 
             if ((z > 4) && (Objects.equals(allSnakeJointsXPos.get(0), allSnakeJointsXPos.get(z))) && (Objects.equals(allSnakeJointsYPos.get(0), allSnakeJointsYPos.get(z)))) {
@@ -313,8 +310,10 @@ public class Snake extends JPanel  {
      * method spawn apple in random position
      */
     public void spawnApple() {
-        setAppleXPos((int) (Math.random() * RAND_POS) * board.getFIELD_SIZE());
-        setAppleYPos((int) (Math.random() * RAND_POS) * board.getFIELD_SIZE());
+        
+        appleXPos = (int)(Math.random() * RAND_POS) * board.getFIELD_SIZE();
+        appleYPos = (int)(Math.random() * RAND_POS) * board.getFIELD_SIZE();
+        
     }
     
 }
