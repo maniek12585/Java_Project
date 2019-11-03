@@ -17,11 +17,11 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import pl.polsl.PawelZachara.project.Model.Snake;
-
+import pl.polsl.PawelZachara.project.Model.Direction;
 /**
 * @author  Paweł Zachara
-* @version 1.0
-* @since   2019-10-20 
+* @version 1.1
+ *@since   2019-11-02
 */
 public class Board extends JPanel implements ActionListener {
 
@@ -55,8 +55,6 @@ public class Board extends JPanel implements ActionListener {
     */
     private Image head;
 
-  
-
     /**
      * @return the B_WIDTH
      */
@@ -79,7 +77,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     /**
-     *
+     * class constructor
      */
     public Board() {
         
@@ -95,7 +93,6 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         doDrawing(g);
     }
     
@@ -131,14 +128,6 @@ public class Board extends JPanel implements ActionListener {
         repaint();
     }
 
-    /**
-     *
-     * @param alertMessage
-     */
-    public void callExceptionBox(String alertMessage)
-    {
-    }
-    
     /**
      * method that initialise gameplay board
      */
@@ -178,12 +167,12 @@ public class Board extends JPanel implements ActionListener {
         if (snake.isInGame()) {
 
             g.drawImage(apple, snake.getAppleXPos(), snake.getAppleYPos(), this);
-
+            
             for (int z = 0; z < snake.getSnakeJoints(); z++) {
                 if (z == 0) {
-                    g.drawImage(head, snake.getAllSnakeJointsXPos()[z], snake.getAllSnakeJointsYPos()[z], this);
+                    g.drawImage(head, snake.getAllSnakeJointsXPosElem(z), snake.getAllSnakeJointsYPosElem(z), this);
                 } else {
-                    g.drawImage(snakeJoint, snake.getAllSnakeJointsXPos()[z], snake.getAllSnakeJointsYPos()[z], this);
+                    g.drawImage(snakeJoint, snake.getAllSnakeJointsXPosElem(z), snake.getAllSnakeJointsYPosElem(z), this);
                 }
             }
 
@@ -225,29 +214,20 @@ public class Board extends JPanel implements ActionListener {
 
             int key = e.getKeyCode();
 
-            if ((key == KeyEvent.VK_LEFT) && (!snake.isRightDirection())) {
-                snake.setLeftDirection(true);
-                snake.setUpDirection(false);
-                snake.setDownDirection(false);
+            if ((key == KeyEvent.VK_LEFT) && !(snake.getSnakeCurrentDirection() == Direction.RIGHT)) {
+                snake.setSnakeDirection(Direction.LEFT);
             }
 
-            if ((key == KeyEvent.VK_RIGHT) && (!snake.isLeftDirection())) {
-                snake.setRightDirection(true);
-                snake.setUpDirection(false);
-                snake.setDownDirection(false);
+            if ((key == KeyEvent.VK_RIGHT) && !(snake.getSnakeCurrentDirection() == Direction.LEFT)) {
+                  snake.setSnakeDirection(Direction.RIGHT);
             }
 
-            if ((key == KeyEvent.VK_UP) && (!snake.isDownDirection())) {
-                snake.setUpDirection(true);
-                snake.setRightDirection(false);
-                snake.setLeftDirection(false);
+            if ((key == KeyEvent.VK_UP) && !(snake.getSnakeCurrentDirection() == Direction.DOWN)) {
+                snake.setSnakeDirection(Direction.UP);
             }
             
-            if ((key == KeyEvent.VK_DOWN) && (!snake.isUpDirection())) {
-                snake.setDownDirection(true);
-                snake.setRightDirection(false);
-                snake.setLeftDirection(false);
-
+            if ((key == KeyEvent.VK_DOWN) && !(snake.getSnakeCurrentDirection() == Direction.UP)) {
+                snake.setSnakeDirection(Direction.DOWN);
             }
         }
     }

@@ -1,13 +1,15 @@
 package pl.polsl.PawelZachara.project.Model;
 
+import java.util.List;
+import java.util.Arrays;
+import java.util.Objects;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import pl.polsl.PawelZachara.project.View.Board;
-
 /**
 * @author  Paweł Zachara
-* @version 1.0
-* @since   2019-10-20 
+* @version 1.1
+* @since   2019-11-02
 */
 
 public class Snake extends JPanel  {
@@ -16,7 +18,7 @@ public class Snake extends JPanel  {
     /**
      * number of snake joints
      */
-    private int snakeJoints;
+     private int snakeJoints;
     /**
      * number of all field on board
      */
@@ -24,11 +26,11 @@ public class Snake extends JPanel  {
     /**
      * array that represents snake joints x positions
      */
-    private int[] allSnakeJointsXPos = new int[ALL_FIELDS];
+    private List<Integer> allSnakeJointsXPos;
     /**
      * array that represents snake joints y positions
      */
-    private int[] allSnakeJointsYPos = new int[ALL_FIELDS];
+    private List<Integer> allSnakeJointsYPos;
     /**
      * random snake spawn position
      */
@@ -45,22 +47,11 @@ public class Snake extends JPanel  {
      * y apple position
      */
     private int appleYPos;
-    /**
-     * if snake turned left true else false;
-     */
-    private boolean leftDirection = false;
-    /**
-     * if snake turned right true else false;
-     */
-    private boolean rightDirection = true;
-    /**
-     * if snake turned up true else false;
-     */
-    private boolean upDirection = false;
-    /**
-     * if snake turned down true else false;
-     */
-    private boolean downDirection = false;
+    
+     /*
+    * current snake direction
+    */
+    private Direction snakeCurrentDirection = Direction.RIGHT;
     
     /*
     * if game is on this is true else this is false;
@@ -100,34 +91,63 @@ public class Snake extends JPanel  {
         this.inGame = inGame;
     }
     
-    /**
-     * @return the allSnakeJointsXPos
+      /**
+     * @return current snake direction
      */
-    public int[] getAllSnakeJointsXPos() {
+    public Direction getSnakeCurrentDirection()
+    {
+        return this.snakeCurrentDirection;
+    }
+    
+      /**
+     * @param direction direction in which snake will now go
+     */
+    public void setSnakeDirection(Direction direction)
+    {
+        this.snakeCurrentDirection = direction;
+    }
+    
+    
+    
+    /**
+     * @param index the index of element to get
+     * @return element of list at given index
+     */
+    public Integer getAllSnakeJointsXPosElem(int index) {
+        return allSnakeJointsXPos.get(index);
+    }
+
+        /**
+     * @return list of allSnakeJoints at X positions
+     */
+    public List<Integer> getAllSnakeJointsXPos() {
         return allSnakeJointsXPos;
     }
-
     /**
-     * @param allSnakeJointsXPos the allSnakeJointsXPos to set
+     * @param index the index in list where the value will be set
+     * @param value the value which will be set on given index
      */
-    public void setAllSnakeJointsXPos(int[] allSnakeJointsXPos) {
-        this.allSnakeJointsXPos = allSnakeJointsXPos;
+    public void setAllSnakeJointsXPosElem(int index , int value)
+    {
+        this.allSnakeJointsXPos.set(index,value);
+    }
+    
+    /**
+     * @param index the index of element to get
+     * @return element of list at given index
+     */
+    public Integer getAllSnakeJointsYPosElem(int index) {
+        return allSnakeJointsYPos.get(index);
     }
 
-    /**
-     * @return the allSnakeJointsYPos
+     /**
+     * @param index the index in list where the value will be set
+     * @param value the value which will be set on given index
      */
-    public int[] getAllSnakeJointsYPos() {
-        return allSnakeJointsYPos;
+    public void setAllSnakeJointsYPosElem(int index , int value)
+    {
+        this.allSnakeJointsYPos.set(index,value);
     }
-
-    /**
-     * @param allSnakeJointsYPos the allSnakeJointsYPos to set
-     */
-    public void setAllSnakeJointsYPos(int[] allSnakeJointsYPos) {
-        this.allSnakeJointsYPos = allSnakeJointsYPos;
-    }
-
     /**
      * @return the snakeJoints
      */
@@ -140,62 +160,6 @@ public class Snake extends JPanel  {
      */
     public void setSnakeJoints(int snakeJoints) {
         this.snakeJoints = snakeJoints;
-    }
-
-    /**
-     * @return the leftDirection
-     */
-    public boolean isLeftDirection() {
-        return leftDirection;
-    }
-
-    /**
-     * @param leftDirection the leftDirection to set
-     */
-    public void setLeftDirection(boolean leftDirection) {
-        this.leftDirection = leftDirection;
-    }
-
-    /**
-     * @return the rightDirection
-     */
-    public boolean isRightDirection() {
-        return rightDirection;
-    }
-
-    /**
-     * @param rightDirection the rightDirection to set
-     */
-    public void setRightDirection(boolean rightDirection) {
-        this.rightDirection = rightDirection;
-    }
-
-    /**
-     * @return the upDirection
-     */
-    public boolean isUpDirection() {
-        return upDirection;
-    }
-
-    /**
-     * @param upDirection the upDirection to set
-     */
-    public void setUpDirection(boolean upDirection) {
-        this.upDirection = upDirection;
-    }
-
-    /**
-     * @return the downDirection
-     */
-    public boolean isDownDirection() {
-        return downDirection;
-    }
-
-    /**
-     * @param downDirection the downDirection to set
-     */
-    public void setDownDirection(boolean downDirection) {
-        this.downDirection = downDirection;
     }
 
     /**
@@ -230,12 +194,26 @@ public class Snake extends JPanel  {
      * method that initialise game state timer and spawns snake
      */
     public void initGame() {
-
+        
+        allSnakeJointsXPos = Arrays.asList(new Integer[ALL_FIELDS]);
+    
+        allSnakeJointsYPos = Arrays.asList(new Integer[ALL_FIELDS]);
+        
+        for(Integer item : allSnakeJointsXPos)
+        {
+            item = 0;
+        }
+        
+          for(Integer item : allSnakeJointsYPos)
+        {
+            item = 0;
+        }
+        
         setSnakeJoints(3);
-
-        for (int z = 0; z < getSnakeJoints(); z++) {
-            getAllSnakeJointsXPos()[z] = 50 - z * 10;
-            getAllSnakeJointsYPos()[z] = 50;
+        
+        for (int z = 0; z < 3; z++) {
+            allSnakeJointsXPos.set(z,50 - z *10);
+            allSnakeJointsYPos.set(z,50);
         }
         
         spawnApple();
@@ -249,9 +227,8 @@ public class Snake extends JPanel  {
      */
     public void checkAppleCollision() {
 
-        if ((getAllSnakeJointsXPos()[0] == getAppleXPos()) && (getAllSnakeJointsYPos()[0] == getAppleYPos())) {
-
-            setSnakeJoints(getSnakeJoints() + 1);
+        if ((allSnakeJointsXPos.get(0) == appleXPos) && (allSnakeJointsYPos.get(0) == appleYPos)) {
+            snakeJoints += 1;
             spawnApple();
         }
     }
@@ -260,12 +237,15 @@ public class Snake extends JPanel  {
      * method that moves snake head depending on direction from input
      */
     public void move() {
+        int foo;
         try 
         {
-            for (int z = getSnakeJoints(); z > 0; z--) 
+            for (int z = snakeJoints; z > 0; z--) 
             {
-                getAllSnakeJointsXPos()[z] = getAllSnakeJointsXPos()[(z - 1)];
-                getAllSnakeJointsYPos()[z] = getAllSnakeJointsYPos()[(z - 1)];
+                foo = allSnakeJointsXPos.get(z-1);
+                allSnakeJointsXPos.set(z,foo);
+                foo = allSnakeJointsYPos.get(z-1);
+                allSnakeJointsYPos.set(z,foo);
             }
         }
         
@@ -275,20 +255,24 @@ public class Snake extends JPanel  {
         }
         
 
-        if (isLeftDirection()) {
-            getAllSnakeJointsXPos()[0] -= board.getFIELD_SIZE();
+        if (snakeCurrentDirection == Direction.LEFT) {
+            foo =  allSnakeJointsXPos.get(0);
+            allSnakeJointsXPos.set(0,foo -= board.getFIELD_SIZE());
         }
 
-        if (isRightDirection()) {
-            getAllSnakeJointsXPos()[0] += board.getFIELD_SIZE();
+        if (snakeCurrentDirection == Direction.RIGHT) {
+            foo =  allSnakeJointsXPos.get(0);
+            allSnakeJointsXPos.set(0,foo += board.getFIELD_SIZE());
         }
 
-        if (isUpDirection()) {
-            getAllSnakeJointsYPos()[0] -= board.getFIELD_SIZE();
+        if (snakeCurrentDirection == Direction.UP) {
+            foo =  allSnakeJointsYPos.get(0);
+            allSnakeJointsYPos.set(0,foo -= board.getFIELD_SIZE());
         }
 
-        if (isDownDirection()) {
-            getAllSnakeJointsYPos()[0] += board.getFIELD_SIZE();
+        if (snakeCurrentDirection == Direction.DOWN) {
+            foo =  allSnakeJointsYPos.get(0);
+            allSnakeJointsYPos.set(0,foo += board.getFIELD_SIZE());
         }
     }
 
@@ -299,24 +283,24 @@ public class Snake extends JPanel  {
 
         for (int z = getSnakeJoints(); z > 0; z--) {
 
-            if ((z > 4) && (getAllSnakeJointsXPos()[0] == getAllSnakeJointsXPos()[z]) && (getAllSnakeJointsYPos()[0] == getAllSnakeJointsYPos()[z])) {
+            if ((z > 4) && (Objects.equals(allSnakeJointsXPos.get(0), allSnakeJointsXPos.get(z))) && (Objects.equals(allSnakeJointsYPos.get(0), allSnakeJointsYPos.get(z)))) {
                 inGame = false;
             }
         }
 
-        if (getAllSnakeJointsYPos()[0] >= board.getB_HEIGHT()) {
+        if (allSnakeJointsYPos.get(0) >= board.getB_HEIGHT()) {
              inGame = false;
         }
 
-        if (getAllSnakeJointsYPos()[0] < 0) {
+        if (allSnakeJointsYPos.get(0) < 0) {
              inGame = false;
         }
 
-        if (getAllSnakeJointsXPos()[0] >= board.getB_WIDTH()) {
+        if (allSnakeJointsXPos.get(0) >= board.getB_WIDTH()) {
              inGame = false;
         }
 
-        if (getAllSnakeJointsXPos()[0] < 0) {
+        if (allSnakeJointsXPos.get(0) < 0) {
              inGame = false;
         }
         
@@ -329,13 +313,8 @@ public class Snake extends JPanel  {
      * method spawn apple in random position
      */
     public void spawnApple() {
-
-        int r = (int) (Math.random() * RAND_POS);
-        setAppleXPos(r * board.getFIELD_SIZE());
-
-        r = (int) (Math.random() * RAND_POS);
-        setAppleYPos(r * board.getFIELD_SIZE());
+        setAppleXPos((int) (Math.random() * RAND_POS) * board.getFIELD_SIZE());
+        setAppleYPos((int) (Math.random() * RAND_POS) * board.getFIELD_SIZE());
     }
     
-
 }

@@ -1,10 +1,9 @@
 /**
-* Snake - simple snake game 
-* 
-*
+ * Simple snake game
+ * 
 * @author  Paweł Zachara
-* @version 1.0
-* @since   2019-10-20 
+* @version 1.1
+ *@since   2019-11-02
 */
 
 
@@ -21,7 +20,7 @@ public class Main extends JFrame {
     /**
      * main window reference
      */
-    public static JFrame mainWindow;
+//    public static JFrame mainWindow;
 
     /**
      *Main class contructor where the interface is initialised
@@ -36,7 +35,7 @@ public class Main extends JFrame {
        
         String name = JOptionPane.showInputDialog(this, "What's your name ? ");
 
-        if(name == "")
+        if("".equals(name))
         {
             try {
                 throw new Exception();
@@ -61,12 +60,12 @@ public class Main extends JFrame {
     /**
      * main program method where main window is initialised
      */
-    public static void main() {
+    public static void main(String[] args) {
         
         EventQueue.invokeLater(() -> {
             
-            JFrame mainWindow = new Main();
-            mainWindow.setVisible(true);
+            JFrame window = new Main();
+            window.setVisible(true);
         });
     }
 }
