@@ -9,10 +9,13 @@
 
 package pl.polsl.PawelZachara.project.Model;
 
-import pl.polsl.PawelZachara.project.View.*;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import pl.polsl.PawelZachara.Server.Board;
+import pl.polsl.PawelZachara.Server.Player;
+import pl.polsl.PawelZachara.Server.Snake;
 
 
 public class Main extends JFrame {
@@ -45,7 +48,12 @@ public class Main extends JFrame {
         }
         else
         {
+            Player player = new Player(name);
             Board board = new Board();
+            board.initBoard(player);
+            Snake snake = new Snake(board,player);
+            board.setSnake(snake);
+            board.initBoardView(snake);
             add(board);
 
             setResizable(false);

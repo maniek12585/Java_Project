@@ -1,4 +1,4 @@
-package pl.polsl.PawelZachara.project.Model;
+package pl.polsl.PawelZachara.Server;
 
 /**
 * @author  Paweł Zachara

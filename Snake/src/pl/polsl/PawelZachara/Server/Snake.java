@@ -1,28 +1,26 @@
-package pl.polsl.PawelZachara.project.Model;
+package pl.polsl.PawelZachara.Server;
 
 import java.util.List;
 import java.util.Arrays;
 import java.util.Objects;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import pl.polsl.PawelZachara.project.View.Board;
+
 /**
-* @author  Paweł Zachara
-* @version 1.1
-* @since   2019-11-02
-*/
+ * @author Paweł Zachara
+ * @version 1.1
+ * @since 2019-11-02
+ */
+public class Snake extends JPanel {
 
-public class Snake extends JPanel  {
-
- 
     /**
      * number of snake joints
      */
-     private int snakeJoints;
+    private int snakeJoints;
     /**
      * number of all field on board
      */
-    private int ALL_FIELDS = 900;
+    private final int allFields = 900;
     /**
      * array that represents snake joints x positions
      */
@@ -34,11 +32,11 @@ public class Snake extends JPanel  {
     /**
      * random snake spawn position
      */
-    private int RAND_POS = 29;
+    private final int appleRandomSpawnPos = 29;
     /**
      * delay used for setting game speed
      */
-    private int DELAY = 140;
+    private final int delay = 140;
     /**
      * x apple position
      */
@@ -47,14 +45,14 @@ public class Snake extends JPanel  {
      * y apple position
      */
     private int appleYPos;
-    
-     /*
+
+    /*
     * current snake direction
-    */
+     */
     private Direction snakeCurrentDirection = Direction.RIGHT;
     /*
     * variable that tells if the game is on or off;
-    */
+     */
     private boolean inGame = true;
     /**
      * game timer
@@ -64,21 +62,27 @@ public class Snake extends JPanel  {
      * reference on game board
      */
     private Board board;
-    
+
+     /**
+     * reference to player
+     */
+    private Player player;
+
     /**
-     *Snake class constructor initialise calling initGame method and setting board reference
+     * Snake class constructor initialise calling initGame method and setting
+     * board reference
+     *
      * @param board
      */
-    public Snake(Board board)
-    {
+    public Snake(Board board,Player player) {
         this.board = board;
+        this.player = player;
         initGame();
     }
-    
-      
+
     /**
      * @return the inGame
-    */
+     */
     public boolean isInGame() {
         return inGame;
     }
@@ -89,46 +93,58 @@ public class Snake extends JPanel  {
     public void setInGame(boolean inGame) {
         this.inGame = inGame;
     }
-    
-      /**
+
+    /**
      * @return current snake direction
      */
-    public Direction getSnakeCurrentDirection()
-    {
+    public Direction getSnakeCurrentDirection() {
         return this.snakeCurrentDirection;
     }
-    
+
     /**
-    * @param direction direction in which snake will now go
-    */
-    public void setSnakeDirection(Direction direction)
-    {
+     * @param direction direction in which snake will now go
+     */
+    public void setSnakeDirection(Direction direction) {
         this.snakeCurrentDirection = direction;
+    }
+
+    /**
+     * @return appleSpawnPosition
+     */
+    public int getAppleRandomSpawnPos() {
+        return appleRandomSpawnPos;
     }
     
     /**
-    * @param index the index of element to get
-    * @return element of list at given index
-    */
+     * @param index the index of element to get
+     * @return element of list at given index
+     */
     public Integer getAllSnakeJointsXPosElem(int index) {
         return allSnakeJointsXPos.get(index);
     }
 
     /**
-    * @return list of allSnakeJoints at X positions
-    */
+     * @return list of allSnakeJoints at X positions
+     */
     public List<Integer> getAllSnakeJointsXPos() {
         return allSnakeJointsXPos;
     }
-    /**
-    * @param index the index in list where the value will be set
-    * @param value the value which will be set on given index
-    */
-    public void setAllSnakeJointsXPosElem(int index , int value)
-    {
-        this.allSnakeJointsXPos.set(index,value);
-    }
     
+    /**
+     * @return list of allSnakeJoints at Y positions
+     */
+    public List<Integer> getAllSnakeJointsYPos() {
+        return allSnakeJointsYPos;
+    }
+
+    /**
+     * @param index the index in list where the value will be set
+     * @param value the value which will be set on given index
+     */
+    public void setAllSnakeJointsXPosElem(int index, int value) {
+        this.allSnakeJointsXPos.set(index, value);
+    }
+
     /**
      * @param index the index of element to get
      * @return element of list at given index
@@ -137,14 +153,14 @@ public class Snake extends JPanel  {
         return allSnakeJointsYPos.get(index);
     }
 
-     /**
+    /**
      * @param index the index in list where the value will be set
      * @param value the value which will be set on given index
      */
-    public void setAllSnakeJointsYPosElem(int index , int value)
-    {
-        this.allSnakeJointsYPos.set(index,value);
+    public void setAllSnakeJointsYPosElem(int index, int value) {
+        this.allSnakeJointsYPos.set(index, value);
     }
+
     /**
      * @return the snakeJoints
      */
@@ -186,46 +202,56 @@ public class Snake extends JPanel  {
     public void setAppleYPos(int appleYPos) {
         this.appleYPos = appleYPos;
     }
-    
-    /**
-     * method that initialise game state timer and spawns snake
-     */
-    public void initGame() {
-        
-        allSnakeJointsXPos = Arrays.asList(new Integer[ALL_FIELDS]);
-    
-        allSnakeJointsYPos = Arrays.asList(new Integer[ALL_FIELDS]);
-        
-        for(Integer item : allSnakeJointsXPos)
-        {
-            item = 0;
-        }
-        
-        for(Integer item : allSnakeJointsYPos)
-        {
-            item = 0;
-        }
-        
-        setSnakeJoints(3);
-        
-        for (int z = 0; z < 3; z++) {
-            allSnakeJointsXPos.set(z,50 - z *10);
-            allSnakeJointsYPos.set(z,50);
-        }
-        
-        spawnApple();
 
-        timer = new Timer(DELAY, board);
-        timer.start();
+     /**
+     * @return the timer
+     */
+    public Timer getTimer() {
+        return timer;
     }
     
     /**
-     * method checks if snake has collision with apple , if true snake grow and new apple is spawned
+     * method that initialise game state timer and spawns snake
+     * @param player
+     */
+    public void initGame() {
+
+        allSnakeJointsXPos = Arrays.asList(new Integer[allFields]);
+
+        allSnakeJointsYPos = Arrays.asList(new Integer[allFields]);
+
+        for (Integer item : allSnakeJointsXPos) {
+            item = 0;
+        }
+
+        for (Integer item : allSnakeJointsYPos) {
+            item = 0;
+        }
+
+        setSnakeJoints(3);
+
+        for (int z = 0; z < 3; z++) {
+            allSnakeJointsXPos.set(z, 50 - z * 10);
+            allSnakeJointsYPos.set(z, 50);
+        }
+
+        spawnApple();
+
+        timer = new Timer(delay, board);
+        getTimer().start();
+    }
+
+    /**
+     * method checks if snake has collision with apple , if true snake grow and
+     * new apple is spawned
      */
     public void checkAppleCollision() {
 
         if ((allSnakeJointsXPos.get(0) == appleXPos) && (allSnakeJointsYPos.get(0) == appleYPos)) {
             snakeJoints += 1;
+            int currentScore = player.getScore();
+            currentScore++;
+            player.setScore(currentScore);
             spawnApple();
         }
     }
@@ -235,41 +261,33 @@ public class Snake extends JPanel  {
      */
     public void move() {
         int foo;
-        try 
-        {
-            for (int z = snakeJoints; z > 0; z--) 
-            {
-                foo = allSnakeJointsXPos.get(z-1);
-                allSnakeJointsXPos.set(z,foo);
-                foo = allSnakeJointsYPos.get(z-1);
-                allSnakeJointsYPos.set(z,foo);
-            }
-        }
         
-        catch(IndexOutOfBoundsException e)
+        for (int z = snakeJoints; z > 0; z--) 
         {
-            System.out.println(e.getMessage());
+            foo = allSnakeJointsXPos.get(z - 1);
+            allSnakeJointsXPos.set(z, foo);
+            foo = allSnakeJointsYPos.get(z - 1);
+            allSnakeJointsYPos.set(z, foo);
         }
-        
 
         if (snakeCurrentDirection == Direction.LEFT) {
-            foo =  allSnakeJointsXPos.get(0);
-            allSnakeJointsXPos.set(0,foo -= board.getFIELD_SIZE());
+            foo = allSnakeJointsXPos.get(0);
+            allSnakeJointsXPos.set(0, foo -= board.getFieldSize());
         }
 
         if (snakeCurrentDirection == Direction.RIGHT) {
-            foo =  allSnakeJointsXPos.get(0);
-            allSnakeJointsXPos.set(0,foo += board.getFIELD_SIZE());
+            foo = allSnakeJointsXPos.get(0);
+            allSnakeJointsXPos.set(0, foo += board.getFieldSize());
         }
 
         if (snakeCurrentDirection == Direction.UP) {
-            foo =  allSnakeJointsYPos.get(0);
-            allSnakeJointsYPos.set(0,foo -= board.getFIELD_SIZE());
+            foo = allSnakeJointsYPos.get(0);
+            allSnakeJointsYPos.set(0, foo -= board.getFieldSize());
         }
 
         if (snakeCurrentDirection == Direction.DOWN) {
-            foo =  allSnakeJointsYPos.get(0);
-            allSnakeJointsYPos.set(0,foo += board.getFIELD_SIZE());
+            foo = allSnakeJointsYPos.get(0);
+            allSnakeJointsYPos.set(0, foo += board.getFieldSize());
         }
     }
 
@@ -277,7 +295,7 @@ public class Snake extends JPanel  {
      * method checks collision with walls
      */
     public void checkCollision() {
-        
+
         for (int z = getSnakeJoints(); z > 0; z--) {
 
             if ((z > 4) && (Objects.equals(allSnakeJointsXPos.get(0), allSnakeJointsXPos.get(z))) && (Objects.equals(allSnakeJointsYPos.get(0), allSnakeJointsYPos.get(z)))) {
@@ -285,24 +303,24 @@ public class Snake extends JPanel  {
             }
         }
 
-        if (allSnakeJointsYPos.get(0) >= board.getB_HEIGHT()) {
-             inGame = false;
+        if (allSnakeJointsYPos.get(0) >= board.getBoardHeight()) {
+            inGame = false;
         }
 
         if (allSnakeJointsYPos.get(0) < 0) {
-             inGame = false;
+            inGame = false;
         }
 
-        if (allSnakeJointsXPos.get(0) >= board.getB_WIDTH()) {
-             inGame = false;
+        if (allSnakeJointsXPos.get(0) >= board.getBoardWidth()) {
+            inGame = false;
         }
 
         if (allSnakeJointsXPos.get(0) < 0) {
-             inGame = false;
+            inGame = false;
         }
-        
+
         if (!inGame) {
-            timer.stop();
+            getTimer().stop();
         }
     }
 
@@ -310,10 +328,11 @@ public class Snake extends JPanel  {
      * method spawn apple in random position
      */
     public void spawnApple() {
-        
-        appleXPos = (int)(Math.random() * RAND_POS) * board.getFIELD_SIZE();
-        appleYPos = (int)(Math.random() * RAND_POS) * board.getFIELD_SIZE();
-        
+
+        appleXPos = (int) (Math.random() * appleRandomSpawnPos) * board.getFieldSize();
+        appleYPos = (int) (Math.random() * appleRandomSpawnPos) * board.getFieldSize();
+
     }
-    
+
+
 }
